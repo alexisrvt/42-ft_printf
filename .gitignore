@@ -1,0 +1,28 @@
+# Fichiers objets générés lors de la compilation
+*.o
+
+# Bibliothèques statiques et dynamiques
+*.a
+*.so
+
+# Exécutables par défaut et de test
+a.out
+*.out
+*.exe
+
+# Fichiers de débogage et de profilage
+*.dSYM/
+gmon.out
+valgrind-out.txt
+
+# Fichiers temporaires des éditeurs de texte (Vim, Emacs, etc.)
+*~
+.*.swp
+\#*\#
+
+# Fichiers systèmes spécifiques aux OS
+.DS_Store
+Thumbs.db
+
+# Fichier main.c
+main.c
