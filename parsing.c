@@ -46,15 +46,32 @@ void	parse_flags(const char *str, int *i, t_format *fmt)
 
 void	parse_width(const char *str, int *i, t_format *fmt)
 {
-	
+	while (str[*i] && ft_isdigit(str[*i]))
+	{
+		fmt->width = (fmt->width * 10) + (str[*i] - '0');
+		(*i)++;
+	}
 }
 
-void 	parse_precision(const char *str, int *i, t_format *fmt)
+void	parse_precision(const char *str, int *i, t_format *fmt)
 {
-	
+	if (str[*i] == '.')
+	{
+		fmt->dot = 1;
+		(*i)++;
+		while (str[*i] && ft_isdigit(str[*i]))
+		{
+			fmt->precision = (fmt->precision * 10) + (str[*i] - '0');
+			(*i)++;
+		}
+	}
 }
 
 void	parse_type(const char *str, int *i, t_format *fmt)
 {
-	
+	if (str[*i] && ft_strchr("cspdiuxX%", str[*i]))
+	{
+		fmt->type = str[*i];
+		(*i)++;
+	}
 }
