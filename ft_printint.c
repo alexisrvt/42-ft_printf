@@ -12,18 +12,37 @@
 
 #include "ft_printf.h"
 
-int	print_int(int n, t_format *fmt)
+static int	ft_putabsnbr(long n)
 {
-	int	printed;
+	int		count;
+	char	c;
+
+	count = 0;
+	if (n >= 10)
+		count += ft_putabsnbr(n / 10);
+	c = (n % 10) + '0';
+	count += write(1, &c, 1);
+	return (count);
+}
+
+int	ft_printint(int n, t_format *fmt)
+{
+	int		printed;
+	long	nb;
 
 	printed = 0;
-	if (n >= 0)
+	nb = n;
+	if (nb >= 0)
 	{
 		if (fmt->plus == 1)
 			printed += write(1, "+", 1);
 		else if (fmt->space == 1)
 			printed += write(1, " ", 1);
 	}
-	else if (n < 0)
+	else if (nb < 0)
+	{
 		printed += write (1, "-", 1);
+		nb = -nb;
+	}
+	printed += ft_putabsnbr(nb);
 }

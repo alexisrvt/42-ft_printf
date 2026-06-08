@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	init_format(t_format *fmt)
+void	ft_initform(t_format *fmt)
 {
 	fmt->minus = 0;
 	fmt->zero = 0;

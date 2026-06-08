@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	print_char(int c, t_format *fmt)
+int	ft_printchar(int c, t_format *fmt)
 {
 	int	printed;
 
@@ -21,7 +21,7 @@ int	print_char(int c, t_format *fmt)
 	{
 		printed += write(1, &c, 1);
 		if (fmt->width > 1)
-			printed += print_padding(' ', fmt->width - 1);
+			printed += ft_printpad(' ', fmt->width - 1);
 	}
 	else
 	{

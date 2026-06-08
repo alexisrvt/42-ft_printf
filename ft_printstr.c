@@ -12,9 +12,21 @@
 
 #include "ft_printf.h"
 
-int	print_str_limit(char *str, int limit);
+static int	ft_printstrlim(char *str, int limit)
+{
+	int	count;
 
-int	print_string(char *str, t_format *fmt)
+	count = 0;
+	while (limit > 0 && *str)
+	{
+		count += write(1, str, 1);
+		str++;
+		limit--;
+	}
+	return (count);
+}
+
+int	ft_printstr(char *str, t_format *fmt)
 {
 	int	len;
 	int	printed;
@@ -27,29 +39,15 @@ int	print_string(char *str, t_format *fmt)
 		len = fmt->precision;
 	if (fmt->minus == 1)
 	{
-		printed += print_str_limit(str, len);
+		printed += ft_printstrlim(str, len);
 		if (fmt->width > len)
-			printed += print_padding(' ', fmt->width - len);
+			printed += ft_printpad(' ', fmt->width - len);
 	}
 	else
 	{
 		if (fmt->width > len)
-			printed += print_padding(' ', fmt->width - len);
-		printed += print_str_limit(str, len);
+			printed += ft_printpad(' ', fmt->width - len);
+		printed += ft_printstrlim(str, len);
 	}
 	return (printed);
-}
-
-int	print_str_limit(char *str, int limit)
-{
-	int	count;
-
-	count = 0;
-	while (limit > 0 && *str)
-	{
-		count += write(1, str, 1);
-		str++;
-		limit--;
-	}
-	return (count);
 }

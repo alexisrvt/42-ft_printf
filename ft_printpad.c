@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	print_padding(char c, int n)
+int	ft_printpad(char c, int n)
 {
 	int	count;
 

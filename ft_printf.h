@@ -31,10 +31,12 @@ typedef struct s_format
 }			t_format;
 
 int		ft_printf(const char *format, ...);
-void	init_format(t_format *fmt);
-void	parse_format(const char *str, int *i, t_format *fmt);
-int		dispatch_conversion(t_format *fmt, va_list *ap);
-int		print_padding(char c, int n);
-int		print_char(int c, t_format *fmt);
+void	ft_initform(t_format *fmt);
+void	ft_parse(const char *str, int *i, t_format *fmt);
+int		ft_dispatch(t_format *fmt, va_list *ap);
+int		ft_printpad(char c, int n);
+int		ft_printchar(int c, t_format *fmt);
+int		ft_printstr(char *str, t_format *fmt);
+int		ft_printint(int n, t_format *fmt);
 
 #endif

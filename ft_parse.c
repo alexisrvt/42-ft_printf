@@ -12,21 +12,7 @@
 
 #include "ft_printf.h"
 
-void	parse_flags(const char *str, int *i, t_format *fmt);
-void	parse_width(const char *str, int *i, t_format *fmt);
-void	parse_precision(const char *str, int *i, t_format *fmt);
-void	parse_type(const char *str, int *i, t_format *fmt);
-
-void	parse_format(const char *str, int *i, t_format *fmt)
-{
-	init_format(fmt);
-	parse_flags(str, i, fmt);
-	parse_width(str, i, fmt);
-	parse_precision(str, i, fmt);
-	parse_type(str, i, fmt);
-}
-
-void	parse_flags(const char *str, int *i, t_format *fmt)
+static void	ft_parseflags(const char *str, int *i, t_format *fmt)
 {
 	while (str[*i] && ft_strchr("-0# +", str[*i]))
 	{
@@ -44,7 +30,7 @@ void	parse_flags(const char *str, int *i, t_format *fmt)
 	}
 }
 
-void	parse_width(const char *str, int *i, t_format *fmt)
+static void	ft_parsewidth(const char *str, int *i, t_format *fmt)
 {
 	while (str[*i] && ft_isdigit(str[*i]))
 	{
@@ -53,7 +39,7 @@ void	parse_width(const char *str, int *i, t_format *fmt)
 	}
 }
 
-void	parse_precision(const char *str, int *i, t_format *fmt)
+static void	ft_parsepreci(const char *str, int *i, t_format *fmt)
 {
 	if (str[*i] == '.')
 	{
@@ -67,7 +53,7 @@ void	parse_precision(const char *str, int *i, t_format *fmt)
 	}
 }
 
-void	parse_type(const char *str, int *i, t_format *fmt)
+static void	ft_parsetype(const char *str, int *i, t_format *fmt)
 {
 	if (str[*i] && ft_strchr("cspdiuxX%", str[*i]))
 	{
@@ -75,3 +61,13 @@ void	parse_type(const char *str, int *i, t_format *fmt)
 		(*i)++;
 	}
 }
+
+void	ft_parse(const char *str, int *i, t_format *fmt)
+{
+	ft_initform(fmt);
+	ft_parseflags(str, i, fmt);
+	ft_parsewidth(str, i, fmt);
+	ft_parsepreci(str, i, fmt);
+	ft_parsetype(str, i, fmt);
+}
+
