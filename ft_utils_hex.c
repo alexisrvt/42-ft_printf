@@ -1,33 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printchar.c                                     :+:      :+:    :+:   */
+/*   ft_utils_hex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/06 19:32:58 by arivet            #+#    #+#             */
-/*   Updated: 2026/06/09 14:28:57 by arivet           ###   ########.fr       */
+/*   Created: 2026/06/09 15:45:18 by arivet            #+#    #+#             */
+/*   Updated: 2026/06/09 16:26:33 by arivet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printchar(int c, t_format *fmt)
+int	ft_hexlen(unsigned int n)
 {
-	int	printed;
+	int	len;
 
-	printed = 0;
-	if (fmt->minus == 1)
+	len = 0;
+	if (n == 0)
+		return (1);
+	while (n > 0)
 	{
-		printed += write(1, &c, 1);
-		if (fmt->width > 1)
-			printed += ft_printpad(' ', fmt->width - 1);
+		len++;
+		n /= 16;
 	}
+	return (len);
+}
+
+int	ft_puthex(unsigned int n, int isupper)
+{
+	int		count;
+	char	*base;
+
+	count = 0;
+	if (isupper == 1)
+		base = "0123456789ABCDEF";
 	else
-	{
-		if (fmt->width > 1)
-			printed += ft_printpad(' ', fmt->width - 1);
-		printed += write(1, &c, 1);
-	}
-	return (printed);
+		base = "0123456789abcdef";
+	if (n >= 16)
+		count += ft_puthex(n / 16, isupper);
+	count += write(1, &base[n % 16], 1);
+	return (count);
 }

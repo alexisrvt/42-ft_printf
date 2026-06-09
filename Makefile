@@ -6,7 +6,7 @@
 #    By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/03 19:58:37 by arvt              #+#    #+#              #
-#    Updated: 2026/06/09 13:52:29 by arivet           ###   ########.fr        #
+#    Updated: 2026/06/09 16:51:47 by arivet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,12 @@ SRCS        = ft_printf.c \
 			  ft_printint.c \
 			  ft_printpad.c \
 			  ft_printstr.c \
-			  ft_utils_nbr.c
+			  ft_printunint.c \
+			  ft_printhex.c \
+			  ft_printptr.c \
+			  ft_printper.c \
+			  ft_utils_nbr.c \
+			  ft_utils_hex.c
 
 OBJS        = $(SRCS:.c=.o)
 
@@ -38,6 +43,8 @@ $(NAME): $(LIBFT) $(OBJS)
 	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJS)
 
+bonus: all
+
 clean:
 	rm -f $(OBJS)
 	make -C $(LIBFT_DIR) clean
@@ -48,4 +55,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
