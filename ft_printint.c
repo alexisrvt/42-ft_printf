@@ -1,73 +1,84 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_int.c                                        :+:      :+:    :+:   */
+/*   ft_printint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/08 16:05:30 by arivet            #+#    #+#             */
-/*   Updated: 2026/06/08 16:58:55 by arivet           ###   ########.fr       */
+/*   Updated: 2026/06/09 14:15:05 by arivet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_numlen(long n)
+static int	ft_getpad(int n, int len, int zeros, t_format *fmt)
 {
-	int	len;
+	int	pad;
+	int	signlen;
 
-	len = 0;
-	if (n == 0)
-		return (1);
-	while (n > 0)
-	{
-		len++;
-		n /= 10;
-	}
-	return (len);
+	pad = 0;
+	signlen = 0;
+	if (n < 0 || fmt->plus == 1 || fmt->space == 1)
+		signlen = 1;
+	if (fmt->width > (len + signlen + zeros))
+		pad = fmt->width - (len + signlen + zeros);
+	return (pad);
 }
 
-static int	ft_putabsnbr(long n)
+static int	ft_putsign(int n, t_format *fmt)
 {
-	int		count;
-	char	c;
+	if (n < 0)
+		return (write(1, "-", 1));
+	else if (fmt->plus == 1)
+		return (write(1, "+", 1));
+	else if (fmt->space == 1)
+		return (write(1, " ", 1));
+	return (0);
+}
 
-	count = 0;
-	if (n >= 10)
-		count += ft_putabsnbr(n / 10);
-	c = (n % 10) + '0';
-	count += write(1, &c, 1);
-	return (count);
+static int	ft_printf_write(int n, int len, int zeros, t_format *fmt)
+{
+	int		printed;
+	long	nb;
+	int		pad;
+
+	printed = 0;
+	pad = ft_getpad(n, len, zeros, fmt);
+	if (fmt->zero == 1 && fmt->dot == 0 && fmt->minus == 0)
+	{
+		zeros += pad;
+		pad = 0;
+	}
+	nb = n;
+	if (nb < 0)
+		nb = -nb;
+	if (fmt->minus == 0 && pad > 0)
+		printed += ft_printpad(' ', pad);
+	printed += ft_putsign(n, fmt);
+	if (zeros > 0)
+		printed += ft_printpad('0', zeros);
+	if (len > 0)
+		printed += ft_putnbr_abs(nb);
+	if (fmt->minus == 1 && pad > 0)
+		printed += ft_printpad(' ', pad);
+	return (printed);
 }
 
 int	ft_printint(int n, t_format *fmt)
 {
-	int		printed;
+	int		len;
+	int		zeros;
 	long	nb;
-	int		numlen;
-	int		numzero;
 
-	printed = 0;
 	nb = n;
 	if (nb < 0)
 		nb = -nb;
-	numlen = ft_numlen(nb);
+	len = ft_nbrlen(nb);
 	if (nb == 0 && fmt->dot == 1 && fmt->precision == 0)
-		numlen = 0;
-	if (fmt->dot == 1 && fmt->precision > numlen)
-		numzero = fmt->precision - numlen;
-	if (n >= 0)
-	{
-		if (fmt->plus == 1)
-			printed += write(1, "+", 1);
-		else if (fmt->space == 1)
-			printed += write(1, " ", 1);
-	}
-	else
-		printed += write (1, "-", 1);
-	if (numzero > 0)
-		printed += ft_printpad('0', numzero);
-	if (numlen > 0)
-		printed += ft_putabsnbr(nb);
-	return (printed);
+		len = 0;
+	zeros = 0;
+	if (fmt->dot == 1 && fmt->precision > len)
+		zeros = fmt->precision - len;
+	return (ft_printf_write(n, len, zeros, fmt));
 }

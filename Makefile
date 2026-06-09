@@ -3,23 +3,31 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arivet <arivet@student.42.fr>              +#+  +:+       +#+         #
+#    By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/03 19:58:37 by arvt              #+#    #+#              #
-#    Updated: 2026/06/03 21:44:11 by arivet           ###   ########.fr        #
+#    Updated: 2026/06/09 13:52:29 by arivet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME        = libftprintf.a
-CC          = cc
-CFLAGS      = -Wall -Wextra -Werror
-
-SRCS        = ft_printf.c \ 
+SRCS        = ft_printf.c \
+			  ft_dispatch.c \
+			  ft_initform.c \
+			  ft_parse.c \
+			  ft_printchar.c \
+			  ft_printint.c \
+			  ft_printpad.c \
+			  ft_printstr.c \
+			  ft_utils_nbr.c
 
 OBJS        = $(SRCS:.c=.o)
 
 LIBFT_DIR   = ./libft
 LIBFT       = $(LIBFT_DIR)/libft.a
+
+NAME        = libftprintf.a
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror
 
 all: $(NAME)
 

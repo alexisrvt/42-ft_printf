@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_utils_nbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/03 20:14:30 by arvt              #+#    #+#             */
-/*   Updated: 2026/06/09 14:05:50 by arivet           ###   ########.fr       */
+/*   Created: 2026/06/09 11:06:57 by arivet            #+#    #+#             */
+/*   Updated: 2026/06/09 11:10:51 by arivet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *format, ...)
+int	ft_putnbr_abs(long n)
 {
-	t_format	fmt;
-	va_list		ap;
-	int			i;
-	int			printed;
+	int		count;
+	char	c;
 
-	if (!format)
-		return (-1);
-	va_start(ap, format);
-	i = 0;
-	printed = 0;
-	while (format[i] != '\0')
+	count = 0;
+	if (n >= 10)
+		count += ft_putnbr_abs(n / 10);
+	c = (n % 10) + '0';
+	count += write(1, &c, 1);
+	return (count);
+}
+
+int	ft_nbrlen(long n)
+{
+	int	len;
+
+	len = 0;
+	if (n == 0)
+		return (1);
+	while (n > 0)
 	{
-		if (format[i] == '%')
-		{
-			i++;
-			if (format[i] == '\0')
-				break ;
-			ft_parse(format, &i, &fmt);
-			printed += ft_dispatch(&fmt, &ap);
-		}
-		else
-		{
-			printed += write(1, &format[i], 1);
-			i++;
-		}
+		len++;
+		n /= 10;
 	}
-	va_end(ap);
-	return (printed);
+	return (len);
 }
