@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printptr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: arivet <arivet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 16:38:46 by arivet            #+#    #+#             */
-/*   Updated: 2026/06/09 16:47:22 by arivet           ###   ########.fr       */
+/*   Updated: 2026/06/12 12:26:29 by arivet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,11 @@ int	ft_printptr(void *p, t_format *fmt)
 	int					printed;
 
 	addr = (unsigned long long)p;
+	printed = 0;
+	if (!addr)
+		return (printed += write(1, "(nil)", 5));
 	len = ft_ptrlen(addr);
 	pad = 0;
-	printed = 0;
 	if (fmt->width > (len + 2))
 		pad = fmt->width - (len + 2);
 	if (fmt->minus == 0 && pad > 0)
