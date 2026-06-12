@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: arivet <arivet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 20:14:30 by arvt              #+#    #+#             */
-/*   Updated: 2026/06/09 14:05:50 by arivet           ###   ########.fr       */
+/*   Updated: 2026/06/12 12:53:59 by arivet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ int	ft_printf(const char *format, ...)
 			printed += ft_dispatch(&fmt, &ap);
 		}
 		else
-		{
-			printed += write(1, &format[i], 1);
-			i++;
-		}
+			printed += write(1, &format[i++], 1);
 	}
 	va_end(ap);
 	return (printed);

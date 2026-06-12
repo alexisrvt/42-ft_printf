@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivet <arivet@student.42roma.it>          +#+  +:+       +#+        */
+/*   By: arivet <arivet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/11 22:12:39 by arivet            #+#    #+#             */
-/*   Updated: 2026/06/11 22:12:46 by arivet           ###   ########.fr       */
+/*   Updated: 2026/06/12 12:47:46 by arivet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,3 @@ void	ft_parse(const char *str, int *i, t_format *fmt)
 	ft_parsepreci(str, i, fmt);
 	ft_parsetype(str, i, fmt);
 }
-
